@@ -8,6 +8,13 @@
 #
 
 library(shiny)
+data(iris)
+
+layer_ui = function(x,in_x,in_y){
+  list(selectInput('x','x axis',names(iris),selected = in_x),
+       selectInput('x','y axis',names(iris),selected = in_y),
+       checkboxInput(paste0('in_layer',x+1),'Add layer'))
+}
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -16,16 +23,25 @@ shinyServer(function(input, output) {
     {iris
       })
   
-  output$x_y = renderUI({
-    selectInput('q','qq','qqq')
-    # list(selectInput('x','X Axis',names(df())),
-    #      selectInput('y','Y Axis',names(df())))
-  })
-  
-  output$moreControls <- renderUI({
+  output$x_y_selector = renderUI({
     tagList(
-      sliderInput("n", "N", 1, 1000, 500),
-      textInput("label", "Label")
+      selectInput('def_x',"X Axis",names(df())),
+      selectInput('def_y',"Y Axis",names(df()))
     )
   })
+  
+  output$layer = renderUI({
+    
+      lapply(1:10,function(x){
+        conditionalPanel(paste0('input.in_layer',x),
+                         layer_ui(x,input$def_x,input$def_y)
+                         
+        )
+        }
+        )
+      
+  })
 })
+
+
+

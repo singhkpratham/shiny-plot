@@ -22,8 +22,9 @@ shinyUI(fluidPage(
     sidebarPanel(
       radioButtons('in_file',label = 'Select Source',c(iris='iris',mpg='mpg',upload='upload'),selected = NA),
       conditionalPanel('input.in_file == "upload"',fileInput('in.df','upload csv',multiple = T)),
-      checkboxInput('in_layer2','Add a layer'),
-      conditionalPanel('input.in_layer2', uiOutput("moreControls"))
+      uiOutput('x_y_selector'),
+      checkboxInput('in_layer1','Add a layer'),
+      uiOutput('layer')
       # lapply(2:5,function(x)conditionalPanel(paste0('input.in_layer',x),
       #                                        tagList(
       #                                          uiOutput("moreControls"),
@@ -31,12 +32,15 @@ shinyUI(fluidPage(
       #                                          )
       #                                        )
              # )
-      # conditionalPanel("true",list(checkboxInput('a','b'),checkboxInput('c','d')))
     ),
     
-    # Show a plot of the generated distribution
     mainPanel(
        plotOutput("distPlot")
     )
   )
 ))
+
+
+
+
+
