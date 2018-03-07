@@ -20,18 +20,11 @@ shinyUI(fluidPage(
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
     sidebarPanel(
-      radioButtons('in_file',label = 'Select Source',c(iris='iris',mpg='mpg',upload='upload'),selected = NA),
-      conditionalPanel('input.in_file == "upload"',fileInput('in.df','upload csv',multiple = T)),
-      uiOutput('x_y_selector'),
-      checkboxInput('in_layer1','Add a layer'),
-      uiOutput('layer')
-      # lapply(2:5,function(x)conditionalPanel(paste0('input.in_layer',x),
-      #                                        tagList(
-      #                                          uiOutput("moreControls"),
-      #                                          checkboxInput(paste0('in_layer',x+1),'Add another layer')
-      #                                          )
-      #                                        )
-             # )
+      
+      actionButton('action','add layer'),
+      uiOutput('del'),
+      tags$div(id = 'placeholder'),
+      uiOutput('ui')
     ),
     
     mainPanel(
@@ -39,8 +32,3 @@ shinyUI(fluidPage(
     )
   )
 ))
-
-
-
-
-
